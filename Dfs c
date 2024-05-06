@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define V 5 // Number of vertices
+
+// Function prototypes
+void DFSUtil(int graph[V][V], int v, bool visited[]);
+
+void DFS(int graph[V][V]) {
+  bool visited[V];
+  for (int i = 0; i < V; i++)
+    visited[i] = false;
+
+  // Call the recursive helper function to start DFS traversal from each vertex
+  for (int i = 0; i < V; i++)
+    if (visited[i] == false)
+      DFSUtil(graph, i, visited);
+}
+
+void DFSUtil(int graph[V][V], int v, bool visited[]) {
+  visited[v] = true;
+  printf("%d ", v);
+
+  // Recur for all unvisited adjacent vertices
+  for (int i = 0; i < V; i++)
+    if (graph[v][i] && !visited[i])
+      DFSUtil(graph, i, visited);
+}
+
+int main() {
+  /* Let us create the following graph
+          0
+      /     \
+     1       2
+    |         \
+   3   ----   4 */
+  int graph[V][V] = {{0, 1, 0, 0, 1},
+                     {1, 0, 1, 1, 0},
+                     {0, 1, 0, 0, 0},
+                     {0, 1, 0, 0, 1},
+                     {1, 0, 0, 1, 0}};
+
+  DFS(graph);
+
+  return 0;
+}
